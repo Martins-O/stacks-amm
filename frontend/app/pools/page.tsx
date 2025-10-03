@@ -1,11 +1,29 @@
+"use client";
+
 import { PoolsList } from "@/components/pools";
 import { getAllPools } from "@/lib/amm";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Pool } from "@/lib/amm";
 
-export const dynamic = "force-dynamic";
+export default function PoolsPage() {
+  const [allPools, setAllPools] = useState<Pool[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export default async function PoolsPage() {
-  const allPools = await getAllPools();
+  useEffect(() => {
+    const fetchPools = async () => {
+      try {
+        const pools = await getAllPools();
+        setAllPools(pools);
+      } catch (error) {
+        console.error("Error fetching pools:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPools();
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col gap-8 p-6">
@@ -20,7 +38,11 @@ export default async function PoolsPage() {
           </Link>
         </div>
 
-        {allPools.length > 0 ? (
+        {loading ? (
+          <div className="flex justify-center items-center p-8">
+            <div className="text-gray-400">Loading pools...</div>
+          </div>
+        ) : allPools.length > 0 ? (
           <PoolsList pools={allPools} />
         ) : (
           <div className="text-center py-12">

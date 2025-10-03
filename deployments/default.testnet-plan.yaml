@@ -22,7 +22,7 @@ plan:
         - contract-publish:
             contract-name: mock-token-2
             expected-sender: STGQVXD8MEEAVRXYNTS6KMWFWDQ7YDJ3Y3PWNP95
-            cost: 10410
+            cost: 131847
             path: contracts/mock-token.clar
             anchor-block-only: true
             clarity-version: 2
@@ -32,15 +32,36 @@ plan:
         - contract-publish:
             contract-name: amm
             expected-sender: STGQVXD8MEEAVRXYNTS6KMWFWDQ7YDJ3Y3PWNP95
-            cost: 210440
+            cost: 134108
             path: contracts/amm.clar
             anchor-block-only: true
             clarity-version: 3
         - contract-publish:
             contract-name: mock-token
             expected-sender: STGQVXD8MEEAVRXYNTS6KMWFWDQ7YDJ3Y3PWNP95
-            cost: 10410
+            cost: 131847
             path: contracts/mock-token.clar
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: sip-010-trait
+            expected-sender: STGQVXD8MEEAVRXYNTS6KMWFWDQ7YDJ3Y3PWNP95
+            cost: 131823
+            path: contracts/sip-010-trait.clar
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: mock-token-a
+            expected-sender: STGQVXD8MEEAVRXYNTS6KMWFWDQ7YDJ3Y3PWNP95
+            cost: 131966
+            path: contracts/mock-token-a.clar
+            anchor-block-only: true
+            clarity-version: 3
+        - contract-publish:
+            contract-name: mock-token-b
+            expected-sender: STGQVXD8MEEAVRXYNTS6KMWFWDQ7YDJ3Y3PWNP95
+            cost: 131966
+            path: contracts/mock-token-b.clar
             anchor-block-only: true
             clarity-version: 3
       epoch: "3.0"
