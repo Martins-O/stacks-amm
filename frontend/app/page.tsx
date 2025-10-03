@@ -1,4 +1,6 @@
 import { Swap } from "@/components/swap";
+import { CreatePool } from "@/components/create-pool";
+import { NoPoolsFound } from "@/components/no-pools-found";
 import { getAllPools } from "@/lib/amm";
 import Link from "next/link";
 
@@ -28,16 +30,21 @@ export default async function Home() {
           </div>
         </div>
 
-        {allPools.length > 0 ? (
-          <Swap pools={allPools} />
-        ) : (
-          <div className="text-center py-12">
-            <p className="text-gray-400 text-lg">No pools found</p>
-            <p className="text-gray-500 text-sm mt-2">
-              Create a new pool to start trading
-            </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Create Pool Section */}
+          <div>
+            <CreatePool />
           </div>
-        )}
+
+          {/* Swap Section */}
+          <div>
+            {allPools.length > 0 ? (
+              <Swap pools={allPools} />
+            ) : (
+              <NoPoolsFound />
+            )}
+          </div>
+        </div>
       </div>
     </main>
   );

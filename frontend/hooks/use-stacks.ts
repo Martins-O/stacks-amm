@@ -174,13 +174,27 @@ export function useStacks() {
     }
   }, [userSession]);
 
+  // Add openContractCall function for new CreatePool component
+  async function openContractCall(options: any) {
+    if (!stacksConnect) throw new Error("Stacks Connect not loaded");
+    if (!userData) throw new Error("User not connected");
+
+    return stacksConnect.openContractCall({
+      ...options,
+      appDetails,
+      postConditionMode: PostConditionMode.Allow,
+    });
+  }
+
   return {
     userData,
+    address: userData?.profile?.stxAddress?.testnet || null,
     handleCreatePool,
     handleSwap,
     handleAddLiquidity,
     handleRemoveLiquidity,
     connectWallet,
     disconnectWallet,
+    openContractCall,
   };
 }

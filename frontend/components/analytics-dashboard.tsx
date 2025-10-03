@@ -3,6 +3,7 @@
 import { Pool } from "@/lib/amm";
 import { useEffect, useState } from "react";
 import { fetchPoolAnalytics, fetchPoolPrice, calculatePoolAPY, PoolAnalytics } from "@/lib/analytics";
+import Link from "next/link";
 
 export interface AnalyticsDashboardProps {
   pools: Pool[];
@@ -39,10 +40,12 @@ export function AnalyticsDashboard({ pools }: AnalyticsDashboardProps) {
 
     if (pools.length > 0) {
       loadAnalytics();
+    } else {
+      setLoading(false);
     }
   }, [pools]);
 
-  if (loading) {
+  if (loading && pools.length > 0) {
     return (
       <div className="flex justify-center items-center p-8">
         <div className="text-gray-400">Loading analytics...</div>
@@ -52,8 +55,29 @@ export function AnalyticsDashboard({ pools }: AnalyticsDashboardProps) {
 
   if (pools.length === 0) {
     return (
-      <div className="flex justify-center items-center p-8">
-        <div className="text-gray-400">No pools available for analytics</div>
+      <div className="space-y-6">
+        <h2 className="text-2xl font-bold text-white">Pool Analytics Dashboard</h2>
+        <div className="flex flex-col justify-center items-center p-12 bg-gray-800 rounded-lg">
+          <div className="text-6xl mb-4">📊</div>
+          <div className="text-xl font-semibold text-white mb-2">No Pools Yet</div>
+          <div className="text-gray-400 text-center mb-6">
+            Create your first pool to start tracking analytics
+          </div>
+          <div className="flex gap-4">
+            <Link
+              href="/"
+              className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors"
+            >
+              Create Pool
+            </Link>
+            <a
+              href="/pools"
+              className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg transition-colors"
+            >
+              View Pools
+            </a>
+          </div>
+        </div>
       </div>
     );
   }

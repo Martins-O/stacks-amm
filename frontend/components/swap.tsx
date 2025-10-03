@@ -62,13 +62,24 @@ export function Swap({ pools }: SwapProps) {
 
     if (fromAmount === 0) return;
 
-    const x = BigInt(pool["balance-0"]);
-    const y = BigInt(pool["balance-1"]);
+    // Add safety checks for pool balances
+    const balance0 = pool["balance-0"];
+    const balance1 = pool["balance-1"];
+
+    if (balance0 === undefined || balance1 === undefined ||
+        isNaN(balance0) || isNaN(balance1) ||
+        balance0 < 0 || balance1 < 0) {
+      console.warn("Invalid pool balances:", { balance0, balance1 });
+      return;
+    }
+
+    const x = BigInt(Math.floor(balance0));
+    const y = BigInt(Math.floor(balance1));
     const k = x * y;
     const feesFloat = pool.fee / 10_000;
 
     if (fromToken === pool["token-0"]) {
-      const deltaX = BigInt(fromAmount);
+      const deltaX = BigInt(Math.floor(fromAmount));
       // (x-dx) * (y+dy) = k
       // y+dy = k/(x-dx)
       // dy = (k/(x-dx)) - y
@@ -82,7 +93,7 @@ export function Swap({ pools }: SwapProps) {
       // (x+dx) * (y-dy) = k
       // x+dx = k/(y-dy)
       // dx = (k/(y-dy)) - x
-      const deltaY = BigInt(fromAmount);
+      const deltaY = BigInt(Math.floor(fromAmount));
       const yMinusDeltaY = y - deltaY;
       const xPlusDeltaX = k / yMinusDeltaY;
       const deltaX = xPlusDeltaX - x;
@@ -117,8 +128,8 @@ export function Swap({ pools }: SwapProps) {
           type="number"
           className="border-2 border-gray-500 rounded-lg px-4 py-2 text-black"
           placeholder="Amount"
-          value={fromAmount}
-          onChange={(e) => setFromAmount(parseInt(e.target.value))}
+          value={isNaN(fromAmount) ? "" : fromAmount}
+          onChange={(e) => setFromAmount(parseInt(e.target.value) || 0)}
         />
       </div>
       <div className="flex flex-col gap-1">
