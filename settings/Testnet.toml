@@ -1,0 +1,11 @@
+[network]
+name = "testnet"
+rpc_url = "https://stacks-node-api.testnet.stacks.co"
+
+[accounts.deployer]
+mnemonic = "clerk glance crawl pledge address maid floor trial return satisfy grape chaos into orchard feature reject lens mystery riot electric invite dumb salute pen"
+
+[[contracts]]
+name = "stream"
+path = "contracts/stream.clar"
+deployer = "deployer"
