@@ -70,7 +70,7 @@ export async function getAllPools() {
     let done = false;
 
     while (!done) {
-      const url = `http://api.testnet.hiro.so/extended/v1/contract/${AMM_CONTRACT_PRINCIPAL}/events?limit=50&offset=${offset}`;
+      const url = `https://api.testnet.hiro.so/extended/v1/contract/${AMM_CONTRACT_PRINCIPAL}/events?limit=50&offset=${offset}`;
       const response = await fetch(url);
 
       if (!response.ok) {
